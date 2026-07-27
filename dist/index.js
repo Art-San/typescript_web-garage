@@ -1,11 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const product = {
-    id: 1,
-    title: 'Клавиатура',
-    price: 7500
-};
-function formatProduct(product) {
-    return `${product.title} (${product.price} руб.)`;
+function formatPayment(payment) {
+    if (payment.method === 'card') {
+        return `оплата картой ${payment.lastFourDigits}`;
+    }
+    else if (payment.method === 'cash') {
+        return `оплата наличными ${payment.changeFrom} change`;
+    }
+    else {
+        return `банковский перевод ${payment.companyInn}`;
+    }
 }
-console.log(formatProduct(product));
+const payment = {
+    method: 'cash',
+    changeFrom: 5000
+};
+console.log(formatPayment(payment));
