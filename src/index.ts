@@ -1,210 +1,333 @@
-// type Product = {
-//   id: number
-//   title: string
-//   price: number
+// const productPrice: number = 1000;
+// const discountPercent: number = 10;
+
+// function calculateDiscount(price: number, percent: number): number {
+//   return price * (percent / 100);
 // }
 
-// function parseJson(text: string): unknown {
-//   return JSON.parse(text)
-// }
+// const discountAmount: number = calculateDiscount(productPrice, discountPercent);
 
-// function isRecord(value: unknown): value is Record<string, unknown> {
-//   return typeof value === 'object' && value !== null
-// }
+// console.log(discountAmount)
 
-// function isProduct(value: unknown): value is Product {
-//   if (!isRecord(value)) {
-//     return false
-//   }
+const userName: string = 'John'
+const userTitle: string = 'Mr.'
 
-//   return (
-//     typeof value.id === 'number' &&
-//     typeof value.title === 'string' &&
-//     typeof value.price === 'number'
-//   )
-// }
-
-// const rawProduct = parseJson('{"id": 1, "title": "клавиатура", "price": 42}')
-
-// if (isProduct(rawProduct)) {
-//   console.log('id', rawProduct.id)
-//   console.log('title', rawProduct.title)
-//   console.log('price', rawProduct.price)
-// } else {
-//   console.log('rawProduct не является Product')
-// }
-
-// Тип возврата и void
-
-// function greet(name: string): string {
-//   return `привет. ${name}`
-// }
-// const greetResult = greet('John') // greetResult имеет тип string
-// console.log(greetResult)
-
-// function getAge(age: number): number {
-//   return age
-// }
-// const ageResult = getAge(20)
-
-// function isActive(): boolean {
-//   return true
-// }
-
-// function getIds(): number[] {
-//   return [1, 2, 3]
-// }
-// const ids = getIds()
-
-// function getUser(): { id: number; name: string } {
-//   return { id: 1, name: 'John' }
-// }
-
-// function logMessage(message: string): void {
-//   console.log(message)
-// }
-
-// const logMessageResult = logMessage('Hello') // logMessageResult имеет тип void // undefined
-
-// console.log(logMessageResult)
-
-type NumberAction = (value: number) => void
-
-function runAction(value: number, action: NumberAction): void {
-  action(value)
+function greet(name: string, title?: string): string {
+  // Без проверки title будет "undefined" в строке
+  if (title) {
+    return `Hello, ${title} ${name}`
+  }
+  return `Hello, ${name}`
 }
 
-runAction(10, (value) => {
-  console.log(value * 2)
-})
+// console.log(greet(userName, userTitle)); // "Hello, Mr. John"
+// console.log(greet(userName)); // "Hello, John"
 
-// never
+// type Currency = "RUB" | "USD" | "EUR";
 
-// type PaymentStatus = 'success' | 'failed' | 'pending'
+// const strictAmount: number = 1250;
+// const strictCurrency: Currency = "EUR";
 
-// function assertNever(value: never): never {
-//   throw new Error('Unexpected object: ' + `${String(value)}`)
+// function formatMoneyStrict(amount: number, currency: Currency = "RUB"): string {
+//   return `${amount.toFixed(2)} ${currency}`;
 // }
 
-// function statusLabel(status: PaymentStatus): string {
-//   switch (status) {
-//     case 'success':
-//       return 'Успешно'
-//     case 'failed':
-//       return 'Ошибка'
-//     case 'pending':
-//       return 'В процессе'
-//     default:
-//       return assertNever(status)
+// const strictDefaultMoneyLabel: string = formatMoneyStrict(strictAmount);
+// const strictMoneyLabel: string = formatMoneyStrict(
+//   strictAmount,
+//   strictCurrency,
+// );
+
+// console.log(strictDefaultMoneyLabel);
+// console.log(strictMoneyLabel);
+
+// const firstNumber: number = 10
+// const secondNumber: number = 20
+// const thirdNumber: number = 30
+
+// function sum(...numbers: number[]): number {
+//   return numbers.reduce((total, number) => total + number, 0)
+// }
+
+// const total: number = sum(firstNumber, secondNumber, thirdNumber)
+
+// console.log(total)
+
+// const rangeStart: number = 1
+// const rangeEnd: number = 10
+// const rangeStep: number = 2
+
+// function createRange(
+//   ...args: [start: number, end: number, step?: number]
+// ): number[] {
+//   const [start, end, step = 1] = args
+//   const result: number[] = []
+
+//   for (let current = start; current <= end; current += step) {
+//     result.push(current)
 //   }
+
+//   return result
 // }
 
-// console.log(statusLabel('success'))
+// const range: number[] = createRange(rangeStart, rangeEnd, rangeStep)
 
-// as (Утверждение типов)
+// console.log(range)
 
-// const inputElement = document.querySelector('input') as HTMLInputElement
-// inputElement.value = 'Hello'
+// type PriceFormatter = (price: number) => string;
 
-// function getValue(flag: boolean): string | number {
-//   return flag ? 'string' : 10
-// }
+// const productPrice: number = 2500;
 
-// const result = getValue(true) as string
-// console.log(result.toUpperCase())
+// const formatRubles: PriceFormatter = (price) => {
+//   return `${price.toLocaleString("ru-RU")} ₽`;
+// };
+
+// const formattedPrice: string = formatRubles(productPrice);
+
+// console.log(formattedPrice);
+
+// type Formatter = {
+//   (price: number): string;
+//   locale: string;
+// };
+
+// const price: number = 2500;
+
+// const formatter: Formatter = Object.assign((price: number) =>
+//   price.toLocaleString(formatter.locale),
+// );
+
+// console.log(formatter(2500));
+
+// formatter.locale = "en-US";
+
+// const formattedValue: string = formatter(price);
+
+// console.log(formattedValue);
+
+// console.log(formatter.locale);
 
 // type Product = {
-//   id: number
-//   title: string
-//   price: number
+//   id: number;
+//   title: string;
+//   price: number;
+// };
+
+// const products: Product[] = [
+//   {
+//     id: 1,
+//     title: "Клавиатура",
+//     price: 4500,
+//   },
+//   {
+//     id: 2,
+//     title: "Монитор",
+//     price: 18_000,
+//   },
+//   {
+//     id: 3,
+//     title: "Ноутбук",
+//     price: 85_000,
+//   },
+// ];
+
+// const productTitles: string[] = products.map((product, index, array) => {
+//   return product.price + ` товар номер ${index}`;
+// });
+
+// console.log(productTitles)
+
+// function selectedProducts(
+//   products: Product[],
+//   predicate?: (product: Product) => boolean,
+// ): Product[] {
+//   if (!predicate) {
+//     return products;
+//   }
+//   return products.filter(predicate);
 // }
 
-// const value = JSON.parse('{"id": 1, "title": "Product", "price": 100}')
-// const product = value as Product
-// console.log(product.price)
+// const expensiveProducts: Product[] = selectedProducts(products, (product) => {
+//   return product.price >= 10_000;
+// });
 
-//  as const (Const Assertions)
+// const expensiveProductsWithoutCall: Product[] = selectedProducts(products);
 
-// const routes = {
-//   home: '/',
-//   about: '/about',
-//   contact: '/contact'
-// } as const
+// console.log(expensiveProducts);
+// console.log(expensiveProductsWithoutCall);
 
-// // routes.home = '/home' // не получится так сделать
+// type Formatter = {
+//   (price: number): string;
+//   locale: string;
+// };
 
-// const homeRoute = routes.home
-// console.log(homeRoute)
+// const price: number = 2500;
 
-// const rgb = [245, 45, 15] as const
+// const formatter = ((price: number) =>
+//   price.toLocaleString("ru-RU")) as Formatter;
 
-// rgb[0] = 10
-// rgb.push(10)
+// formatter.locale = "ru-RU";
 
-// // satisfies
+// const formattedValue: string = formatter(price);
 
-// type config = {
-//   name: string
-//   age: number
+// console.log(formattedValue);
+// console.log(formatter.locale);
+
+// const users = [
+//   { id: 1, name: "Alice", active: true },
+//   { id: 2, name: "Bob", active: false },
+//   { id: 3, name: "Charlie", active: true },
+// ];
+
+// function getValue(key: "id"): number[];
+// function getValue(key: "name"): string[];
+// function getValue(key: "active"): boolean[];
+
+// function getValue(key: string): (string | number | boolean)[] {
+//   return users.map((user) => user[key as keyof typeof user]);
 // }
 
-// const config = {
-//   name: 'John',
-//   age: 30,
-//   role: 'admin' // ошибка так как нет в типе
-// } satisfies config
+// const ids: number[] = getValue("id");
+// const names: string[] = getValue("name");
+// const actives: boolean[] = getValue("active");
 
-// config.name = 'Jane'
-// config.age = 25
-// config.role = 'user'
+// console.log("=== Коллекция пользователей ===");
+// console.log("ID:", ids);
+// console.log("Имена:", names);
+// console.log("Активны:", actives);
 
-// console.log(typeof null === 'object')
+// ============================================
+// ГДЕ ПЕРЕГРУЗКИ ДЕЙСТВИТЕЛЬНО НУЖНЫ
+// ============================================
 
-// type PaymentStatus = 'success' | 'failed' | 'pending' | 'refunded'
+// Представьте, что у нас есть API, который возвращает РАЗНЫЕ ТИПЫ
+// в зависимости от того, что мы запрашиваем
 
-// function assertNever(value: never): never {
-//   throw new Error('Unexpected object: ' + `${String(value)}`)
+// function fetchData(endpoint: "/users"): Promise<User[]>;
+// function fetchData(endpoint: "/user/:id"): Promise<User>;
+// function fetchData(endpoint: "/posts"): Promise<Post[]>;
+
+// async function fetchData(endpoint: string): Promise<unknown> {
+//   const response = await fetch(`https://api.example.com${endpoint}`);
+//   return response.json();
 // }
 
-// function statusLabel(status: PaymentStatus): string {
-//   switch (status) {
-//     case 'success':
-//       return 'Успешно'
-//     case 'failed':
-//       return 'Ошибка'
-//     case 'pending':
-//       return 'В процессе'
-//     default:
-//       return assertNever(status)
+// // Теперь TypeScript знает ТОЧНЫЙ ТИП!
+// const usersData = await fetchData("/users");     // Promise<User[]> ✅
+// const userData = await fetchData("/user/1");     // Promise<User> ✅
+// const postsData = await fetchData("/posts");     // Promise<Post[]> ✅
+
+// ❌ БЕЗ ПЕРЕГРУЗОК было бы:
+// const usersData = await fetchData("/users"); // Promise<unknown>
+// (TypeScript не знает, что там внутри)
+
+// type User = {
+//   id: number;
+//   name: string;
+//   email: string;
+// };
+
+// type CreateUserInput = {
+//   name: string;
+//   email: string;
+//   city: string;
+//   company?: string;
+// };
+
+// function createUser(input: CreateUserInput): User {
+//   console.log(input.city);
+//   console.log(input.company);
+
+//   return {
+//     id: 1,
+//     name: input.name,
+//     email: input.email,
+//   };
+// }
+
+// const user: User = createUser({
+//   name: "Анна",
+//   city: "Москва",
+//   email: "anna@example.com",
+// });
+
+// console.log(user);
+
+// type CreateUserInput = {
+//     id: number;
+//     name: string;
+//     email: string;
+//     city?: string;
+// };
+
+// function createUser(input: CreateUserInput) {
+//     return { ...input, active: true };
+// }
+
+// // При вызове мы видим ключи, что исключает ошибки порядка
+// createUser({ id: 1, name: 'Anna', email: 'anna@mail.com' });
+
+// type Counter = {
+//   value: number
+//   increment(this: Counter, amount: number): void
+// }
+
+// const counter: Counter = {
+//   value: 3,
+
+//   increment(amount) {
+//     this.value += amount
 //   }
 // }
 
-// console.log(statusLabel('success'))
+// const increment = counter.increment
 
-// function parseJson(text: string): unknown {
-//   return JSON.parse(text)
+// increment.call(counter, 5)
+
+// console.log(counter.value)
+
+// ///////////////////////////////////
+
+// function first<T>(items:T[]): T | undefined {
+//   return items[0];
 // }
 
-// const payload = parseJson('{"title": "hello", "price": 42}')
+// const firstNumber = first([10, 20, 30]);
 
-// if (typeof payload === 'object' && payload !== null) {
-//   if ('title' in payload) {
-//     console.log(payload.title)
-//   }
+// const firstName = first(["Анна", "Борис"]);
+
+// console.log(firstNumber);
+// console.log(firstName);
+
+// type Product = {
+//   id: number;
+//   title: string;
+//   price: number;
+// };
+
+// const products: Product[] = [
+//   {
+//     id: 1,
+//     title: "Клавиатура",
+//     price: 4500,
+//   },
+//   {
+//     id: 2,
+//     title: "Монитор",
+//     price: 18000,
+//   },
+// ];
+
+// function mapProduct<TInput, TOutput>(
+//   items: TInput[],
+//   transform: (product: TInput) => TOutput,
+// ): TOutput[] {
+//   return items.map(transform);
 // }
 
-type Config = {
-  name: string
-  age: number
-  role: 'admin' | 'user'
-}
+// const prices = mapProduct(products, (product) => product.price);
 
-const config: Config = {
-  name: 'John',
-  age: 30,
-  role: 'admin' // ошибка так как нет в типе
-}
+// const titles = mapProduct(products, (product) => product.title);
 
-config.name = 'Jane'
-config.age = 25
-config.role = 'user' // ошибка так как нет в типе используй анатацию если роль может быть только admin или user
+// console.log(titles);
+// console.log(prices);
