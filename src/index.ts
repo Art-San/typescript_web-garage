@@ -1,192 +1,234 @@
-// type Named = {
-//   name: string
+// type Identified = {
+//   id: number;
+// };
+
+// type Timestamped = {
+//   createdAt: Date;
+//   updatedAt: Date;
+// };
+
+// type Article =  Identified &
+//   Timestamped & {
+//     title: string;
+//   };
+
+// type Article1 = {
+//   id: number;
+//   createdAt: Date;
+//   updatedAt: Date;
+//   title: string;
+// };
+
+// const article: Article = {
+//   id: 1,
+//   createdAt: new Date(),
+//   updatedAt: new Date(),
+//   title: "Объектные типы в TypeScript",
+// };
+
+// // type Product = Identified &
+// //   Timestamped &
+// //   SoftDeleted &
+// //   Publishable &
+// //   Searchable &
+// //   Trackable & {
+// //     title: string;
+// //     price: number;
+// //   };
+
+// type NumericId = { id: number };
+// type StringId = { id: string };
+// type Impossible = NumericId & StringId;
+
+// function printImpossible(value: Impossible): void {
+//   console.log(value.id);
 // }
 
-// type Employee = {
+// const value: Impossible = {
+//   id: 1, // Ошибка: Type 'number' is not assignable to type 'never'
+// };
+
+type ApiUser = {
+  id: string
+  name: string
+}
+
+type DbRecord = {
+  id: number
+  createdAt: Date
+}
+
+// type UserRecord = ApiUser & DbRecord;
+
+type UserRecord = {
+  apiId: string
+  databaseId: number
+  name: string
+  createdAt: Date
+}
+
+// type Customer = {
+
+//   readonly id: number
+//   readonly createdAt: Date
+//   name: string
+//   email: string
+// }
+
+// type UpdateCustomerCommand = {
 //   id: number
-//   name: string
-//   department: string
+//   name?: string
+//   email?: string
 // }
 
-// const employee = {
-//   id: 10,
-//   name: 'Анна',
-//   department: 'Разработка'
-// }
+// function updateCustomer(
+//   customer: Customer,
+//   command: UpdateCustomerCommand
+// ): Customer {
+//   if (customer.id !== command.id) {
+//     throw new Error('Команда относится к другому клиенту')
+//   }
 
-// function printName(value: Named): void {
-//   console.log(value.name)
-// }
-
-// printName(employee)
-
-// const named: Named = employee
-// console.log(named.id) // Свойство "id" не существует в типе "Named"
-
-// const namedOnly: Named = {
-//   name: 'Анна'
-// }
-
-// const employee2: Employee = namedOnly // Свойство "id" отсутствует в типе "Named", но обязательно в типе "Employee"
-
-// type TranslationKey = "save" | "cancel" | "delete";
-
-// const exactTranslations: Record<TranslationKey, string> = {
-//   save: "Сохранить",
-//   cancel: "Отмена",
-//   delete: "Удалить",
-// };
-
-// type StringDictionary = {
-//   [translationCode: string]: string;
-// };
-
-// const translations: StringDictionary = {
-//   save: "Сохранить",
-//   cancel: "Отмена",
-//   close: "Закрыть",
-// };
-
-// type UserNamesById = {
-//   [id: string]: string;
-// };
-
-// const users: UserNamesById = {
-//   "1": "Анна",
-//   "2": "Борис",
-// };
-
-// type BrokenDictionary = {
-//   [key: string]: string | number;
-
-//   version: number;
-// };
-
-// const dictionary: BrokenDictionary = {
-//   save: "Сохранить",
-//   cancel: "Отмена",
-//   close: "Закрыть",
-//   version: 2,
-// };
-
-// const value = dictionary.save;
-
-// type Cart = {
-//   items: string[]
-//   add(item: string): void
-//   remove(item: string): boolean
-// }
-
-// type Cart = {
-//   items: string[]
-//   add(item: string): void // для данного примера этот вариант больше подходит
-//   remove: (item: string) => boolean
-// }
-
-// const cart: Cart = {
-//   items: [],
-
-//   add(item) {
-//     this.items.push(item)
-//   },
-
-//   remove(item) {
-//     const index = this.items.indexOf(item)
-
-//     if (index === -1) {
-//       return false
-//     }
-
-//     this.items.splice(index, 1)
-//     return true
+//   return {
+//     ...customer,
+//     name: command.name ?? customer.name,
+//     email: command.email ?? customer.email
 //   }
 // }
 
-// cart.add('Книга')
-// const removed = cart.remove('Книга')
-// const removedAgain = cart.remove('Книга')
+// const customer: Customer = {
+//   id: 1,
+//   createdAt: new Date(),
+//   name: 'Анна',
+//   email: 'anna@example.com'
+// }
 
-// console.log(removed)
-// console.log(removedAgain)
+// const command: UpdateCustomerCommand = {
+//   id: 2,
+//   name: 'Анна Петрова'
+// }
 
-// onClick: (event: MouseEvent) => void;
+// updateCustomer(customer, {
+//   id: 1,
+//   name: 'Анна Петрова'
+// })
 
-// type ButtonProps = {
-//   label: string;
-//   onClick: () => void;
+// updateCustomer(customer, {
+//   id: 1,
+//   email: 'anna.petrova@example.com'
+// })
+
+//type UpdateCustomerCommand = Partial<Customer>;
+
+// const renameCustomerCommand: UpdateCustomerCommand = {
+//   id: 1,
+//   name: "Анна Петрова",
 // };
 
-// type Cart = {
-//   items: string[];
-//   add(item: string): void;
-//   remove(item: string): boolean;
+// const changeEmailCommand: UpdateCustomerCommand = {
+//   id: 1,
+//   email: "anna.petrova@example.com",
 // };
 
-// type User = {
+// const updateCustomerCommand: UpdateCustomerCommand = {
+//   id: 1,
+//   name: "Анна Петрова",
+//   email: "anna.petrova@example.com",
+// };
+
+////////////////////////////////////
+// type Address = {
+//   country: string
+//   city: string
+//   street: string
+//   building: string
+//   postalCode?: string
+// }
+
+// type Customer = {
 //   readonly id: number
 //   name: string
-//   readonly createdAt: Date
+//   contacts: {
+//     email: string
+//     phone?: string
+//   }
+//   addresses: readonly Address[]
 // }
 
-// const user: User = {
+// const customer: Customer = {
 //   id: 1,
-//   name: 'Анна',
-//   createdAt: new Date()
+//   name: 'Анна Смирнова',
+//   contacts: {
+//     email: 'anna@example.com'
+//   },
+//   addresses: [
+//     {
+//       country: 'Россия',
+//       city: 'Москва',
+//       street: 'Тверская',
+//       building: '15'
+//     }
+//   ]
 // }
 
-// user.name = 'Анна Петровна'
-
-// user.id = 2 // Ошибка: Cannot assign to 'id' because it is a read-only property.
-
-// console.log(user.id)
-
-// type Team = {
-//   readonly members: readonly string[]
+// if (customer.addresses[0]) {
+//   customer.addresses[0].city = 'Санкт-Петербург'
 // }
 
-// const team: Team = {
-//   members: ['Анна']
+// customer.addresses.push({
+//   country: "Россия",
+//   city: "Москва",
+//   street: "Тверская",
+//   building: "1",
+// });
+
+// function formatAddress(address: Address): string {
+//   return [address.country, address.city, address.street, address.building].join(
+//     ', '
+//   )
 // }
 
-// team.members = ['Борис'] // меняется ссылка на массив
+////////////////////////////////////
 
-// team.members.push('Иван') // теперь
+// type CreateUserInput = {
+//   name: string;
+//   email: string;
+// };
 
-// console.log(team)
-
-// type UserProfile = {
-//   id: number
-//   name: string
-//   avatarUrl?: string
+// function createUser(input: CreateUserInput): void {
+//   console.log(input);
 // }
 
-// const user: UserProfile = {
-//   id: 1,
-//   name: 'Анна'
-// }
+// const checkedInput = {
+//   name: "Анна",
+//   email: "anna@example.com",
+// } satisfies CreateUserInput;
 
-// function getAvatar(profile: UserProfile): string {
-//   return profile.avatarUrl ?? '/images/default-avatar.png'
-// }
+// const input: CreateUserInput = {
+//   name: "Анна",
+//   email: "anna@example.com",
+// };
 
-// console.log(
-//   getAvatar({
-//     id: 1,
-//     name: 'Анна',
-//     avatarUrl: '/avatars/ivan.png'
-//   })
-// )
+// type ButtonConfig = {
+//   variant: "primary" | "secondary";
+//   label: string;
+// };
 
-// type OptionalAvatar = {
-//   avatarUrl?: string
-// }
+// const button = {
+//   variant: "primary",
+//   label: "Сохранить",
+// } satisfies ButtonConfig;
 
-// type ExplicitAvatar = {
-//   avatarUrl: string | undefined
-// }
+// createUser({
+//   name: "Анна",
+//   email: "anna@example.com",
+//   role: "admin", // Ошибка: свойство "role" не существует в типе "CreateUserInput"
+// });
 
-// const first: OptionalAvatar = {}
+// const adminInput = {
+//   name: "Анна",
+//   email: "anna@example.com",
+//   role: "admin",
+// };
 
-// const second: ExplicitAvatar = {
-//   avatarUrl: undefined
-// }
+// createUser(adminInput);
