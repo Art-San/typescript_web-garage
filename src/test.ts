@@ -1,56 +1,48 @@
-type Theme = 'light' | 'dark' | 'system'
-type Locale = 'ru' | 'en'
-type FeatureName = 'newCheckout' | 'recommendations'
+const DocumentStatus = {
+  Draft: 'draft',
+  Published: 'published',
+  Archived: 'archived'
+} as const
 
-type AppConfig = {
-  readonly apiUrl: string
-  theme: Theme
-  locale: Locale
-  features: Record<FeatureName, boolean>
+type DocumentStatus = (typeof DocumentStatus)[keyof typeof DocumentStatus]
+
+interface DocumentBase {
+  id: string
+  author: string
+  createdAt: Date
+  status: DocumentStatus
 }
 
-type ConfigOverrides = {
-  theme?: Theme
-  locale?: Locale
-  features?: Partial<Record<FeatureName, boolean>>
+type Article = DocumentBase & {
+  type: 'article'
+}
+type Video = DocumentBase & {
+  type: 'video'
+}
+type Podcast = DocumentBase & {
+  type: 'podcast'
 }
 
-function mergeConfig(base: AppConfig, overrides: ConfigOverrides): AppConfig {
-  return {
-    ...base,
-    ...overrides,
-    features: {
-      ...base.features,
-      ...overrides.features
-    }
+type Document = Article | Video | Podcast
+
+interface Publishable {
+  publish(): void
+}
+
+class ArticleDocument implements Publishable {
+  constructor(
+    public id: string,
+    public author: string,
+    public createdAt: Date,
+    public status: DocumentStatus,
+    public type: 'article'
+  ) {}
+
+  publish() {
+    this.status = DocumentStatus.Published
   }
 }
 
-const baseConfig: AppConfig = {
-  apiUrl: 'https://api.example.com',
-  theme: 'light',
-  locale: 'ru',
-  features: {
-    newCheckout: false,
-    recommendations: true
-  }
+function getDocumentInfo(document: Document): string {
+  return `${document.author} - ${document.createdAt}`
 }
-
-const overrides: ConfigOverrides = {
-  theme: 'dark',
-  features: {
-    newCheckout: true
-  }
-}
-
-const mergedConfig = mergeConfig(baseConfig, overrides)
-console.log(mergedConfig) //
-// {
-//   apiUrl: 'https://api.example.com',
-//   theme: 'dark',
-//   locale: 'ru',
-//   features: {
-//     newCheckout: true,
-//     recommendations: true
-//   }
-// }

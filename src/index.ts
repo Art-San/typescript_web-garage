@@ -1,3 +1,224 @@
+// enum UserRole {
+//   Admin = "admin",
+//   Editor = "editor",
+//   Viewer = "viewer",
+// }
+
+// type UserRole = "admin" | "editor" | "viewer";
+
+// function canDelete(role: UserRole): boolean {
+//   return role === "admin";
+// }
+
+// console.log(canDelete("admin"));
+// console.log(canDelete("editor"));
+
+// const role1: UserRole = "admin";
+// const role2: UserRole = "editor";
+
+const UserRole = {
+  Admin: 'admin',
+  Editor: 'editor',
+  Viewer: 'viewer'
+} as const
+
+type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+function canEdit(role: UserRole): boolean {
+  return role === UserRole.Admin || role === UserRole.Editor
+}
+
+console.log(canEdit(UserRole.Admin))
+console.log(canEdit(UserRole.Viewer))
+
+// enum Direction {
+//   Up = "UP",
+//   Down = "DOWN",
+// }
+
+// const enum DirectionConst {
+//   Up = "UP",
+//   Down = "DOWN",
+// }
+
+// console.log("Обычный enum:", Direction);
+
+// console.log("Значение:", Direction.Up);
+
+// console.log("const enum:", DirectionConst);
+
+// console.log("Значение const enum:", DirectionConst.Up);
+
+// enum OrderStatus {
+//   Draft = 0,
+//   Paid = 1,
+//   Shipped = 2
+// }
+
+// enum UserRole {
+//   Admin = 'admin',
+//   Editor = 'editor',
+//   Viewer = 'viewer'
+// }
+
+// // const role = UserRole.Admin;
+
+// // console.log(role);
+
+// function canDelete(role: UserRole): boolean {
+//   return role === UserRole.Admin
+// }
+
+// console.log(canDelete(UserRole.Admin))
+// console.log(canDelete(UserRole.Editor))
+
+// enum OrderStatus {
+//   Draft = 0,
+//   Paid = 1,
+//   Shipped = 2
+// }
+
+// const status = OrderStatus.Shipped
+
+// console.log(status)
+
+// enum HttpStatus {
+//   Ok = 200,
+//   NotFound = 404,
+//   ServerError = 500,
+// }
+
+// let status;
+
+// if (status === 200) {
+//   console.log("Запрос выполнен успешно");
+// }
+
+// if (status === 404) {
+//   console.log("Страница не найдена");
+// }
+
+// if (status === 500) {
+//   console.log("Внутренняя ошибка сервера");
+// }
+
+// if (status === HttpStatus.Ok) {
+//   console.log("Запрос выполнен успешно");
+// }
+
+// if (status === HttpStatus.NotFound) {
+//   console.log("Страница не найдена");
+// }
+
+// if (status === HttpStatus.ServerError) {
+//   console.log("Внутренняя ошибка сервера");
+// }
+
+// console.log(HttpStatus)
+
+// interface PriceFormatter {
+//   format(price: number): string;
+// }
+
+// class RubleFormatter implements PriceFormatter {
+//   format(price: number): string {
+//     return `${price.toLocaleString("ru-RU")} ₽`;
+//   }
+// }
+
+// const formatter = new RubleFormatter();
+
+// console.log(formatter.format(2500));
+
+// type Logger = {
+//   log(message: string): void;
+// };
+
+// class ConsoleLogger implements Logger {
+//   log(message: string): void {
+//     console.log(message);
+//   }
+// }
+
+// interface WindowSettings {
+//   theme: "light" | "dark";
+// }
+
+// interface WindowSettings {
+//   locale: "ru" | "en";
+// }
+
+// interface WindowSettings {
+//   theme: "light" | "dark";
+//   locale: "ru" | "en";
+// }
+
+// const settings: WindowSettings = {
+//   theme: "dark",
+//   locale: "ru",
+// };
+
+// console.log(settings);
+
+// window.appVersion = "1.0.0";
+
+// declare global {
+//   interface Window {
+//     appVersion: string;
+//   }
+// }
+
+// export {};
+
+// interface Product {
+//   id: number;
+//   title: string;
+//   price: number;
+// }
+
+// interface Entity {
+//   id: number;
+// }
+
+// interface Product extends Entity {
+//   title: string;
+//   price: number;
+// }
+
+// interface DigitalProduct extends Product {
+//   downloadUrl: string;
+//   fileSize: number;
+// }
+
+// interface Named {
+//   name: string;
+// }
+
+// interface Broken extends Named { // ошибка
+//   name: number;
+// }
+
+// type WithSlug = {
+//   slug: string;
+// };
+
+// interface Category extends WithSlug {
+//   title: string;
+// }
+
+// type User = {
+//   id: number;
+//   name: string;
+// };
+
+// type Id = string | number;
+
+// type Status = "draft" | "published";
+
+// type Coordinates = [number, number];
+
+// type Handler = (message: string) => void;
+
 // type Identified = {
 //   id: number;
 // };
@@ -7,228 +228,32 @@
 //   updatedAt: Date;
 // };
 
-// type Article =  Identified &
+// type Article = Identified &
 //   Timestamped & {
 //     title: string;
+//     status: "draft" | "published";
 //   };
 
-// type Article1 = {
+// type Article = {
 //   id: number;
 //   createdAt: Date;
 //   updatedAt: Date;
 //   title: string;
+//   status: "draft" | "published";
 // };
 
-// const article: Article = {
-//   id: 1,
-//   createdAt: new Date(),
-//   updatedAt: new Date(),
-//   title: "Объектные типы в TypeScript",
-// };
-
-// // type Product = Identified &
-// //   Timestamped &
-// //   SoftDeleted &
-// //   Publishable &
-// //   Searchable &
-// //   Trackable & {
-// //     title: string;
-// //     price: number;
-// //   };
-
-// type NumericId = { id: number };
-// type StringId = { id: string };
-// type Impossible = NumericId & StringId;
-
-// function printImpossible(value: Impossible): void {
-//   console.log(value.id);
-// }
-
-// const value: Impossible = {
-//   id: 1, // Ошибка: Type 'number' is not assignable to type 'never'
-// };
-
-type ApiUser = {
-  id: string
-  name: string
-}
-
-type DbRecord = {
-  id: number
-  createdAt: Date
-}
-
-// type UserRecord = ApiUser & DbRecord;
-
-type UserRecord = {
-  apiId: string
-  databaseId: number
-  name: string
-  createdAt: Date
-}
-
-// type Customer = {
-
+// interface User {
 //   readonly id: number
-//   readonly createdAt: Date
-//   name: string
-//   email: string
-// }
-
-// type UpdateCustomerCommand = {
-//   id: number
 //   name?: string
-//   email?: string
 // }
 
-// function updateCustomer(
-//   customer: Customer,
-//   command: UpdateCustomerCommand
-// ): Customer {
-//   if (customer.id !== command.id) {
-//     throw new Error('Команда относится к другому клиенту')
-//   }
-
-//   return {
-//     ...customer,
-//     name: command.name ?? customer.name,
-//     email: command.email ?? customer.email
-//   }
-// }
-
-// const customer: Customer = {
+// const user: User = {
 //   id: 1,
-//   createdAt: new Date(),
-//   name: 'Анна',
-//   email: 'anna@example.com'
+//   name: 'Анна'
 // }
 
-// const command: UpdateCustomerCommand = {
-//   id: 2,
-//   name: 'Анна Петрова'
+// function printUser(user: User): void {
+//   console.log(`${user.id}: ${user.name}`)
 // }
 
-// updateCustomer(customer, {
-//   id: 1,
-//   name: 'Анна Петрова'
-// })
-
-// updateCustomer(customer, {
-//   id: 1,
-//   email: 'anna.petrova@example.com'
-// })
-
-//type UpdateCustomerCommand = Partial<Customer>;
-
-// const renameCustomerCommand: UpdateCustomerCommand = {
-//   id: 1,
-//   name: "Анна Петрова",
-// };
-
-// const changeEmailCommand: UpdateCustomerCommand = {
-//   id: 1,
-//   email: "anna.petrova@example.com",
-// };
-
-// const updateCustomerCommand: UpdateCustomerCommand = {
-//   id: 1,
-//   name: "Анна Петрова",
-//   email: "anna.petrova@example.com",
-// };
-
-////////////////////////////////////
-// type Address = {
-//   country: string
-//   city: string
-//   street: string
-//   building: string
-//   postalCode?: string
-// }
-
-// type Customer = {
-//   readonly id: number
-//   name: string
-//   contacts: {
-//     email: string
-//     phone?: string
-//   }
-//   addresses: readonly Address[]
-// }
-
-// const customer: Customer = {
-//   id: 1,
-//   name: 'Анна Смирнова',
-//   contacts: {
-//     email: 'anna@example.com'
-//   },
-//   addresses: [
-//     {
-//       country: 'Россия',
-//       city: 'Москва',
-//       street: 'Тверская',
-//       building: '15'
-//     }
-//   ]
-// }
-
-// if (customer.addresses[0]) {
-//   customer.addresses[0].city = 'Санкт-Петербург'
-// }
-
-// customer.addresses.push({
-//   country: "Россия",
-//   city: "Москва",
-//   street: "Тверская",
-//   building: "1",
-// });
-
-// function formatAddress(address: Address): string {
-//   return [address.country, address.city, address.street, address.building].join(
-//     ', '
-//   )
-// }
-
-////////////////////////////////////
-
-// type CreateUserInput = {
-//   name: string;
-//   email: string;
-// };
-
-// function createUser(input: CreateUserInput): void {
-//   console.log(input);
-// }
-
-// const checkedInput = {
-//   name: "Анна",
-//   email: "anna@example.com",
-// } satisfies CreateUserInput;
-
-// const input: CreateUserInput = {
-//   name: "Анна",
-//   email: "anna@example.com",
-// };
-
-// type ButtonConfig = {
-//   variant: "primary" | "secondary";
-//   label: string;
-// };
-
-// const button = {
-//   variant: "primary",
-//   label: "Сохранить",
-// } satisfies ButtonConfig;
-
-// createUser({
-//   name: "Анна",
-//   email: "anna@example.com",
-//   role: "admin", // Ошибка: свойство "role" не существует в типе "CreateUserInput"
-// });
-
-// const adminInput = {
-//   name: "Анна",
-//   email: "anna@example.com",
-//   role: "admin",
-// };
-
-// createUser(adminInput);
+// printUser(user)
