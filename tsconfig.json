@@ -11,7 +11,9 @@
     "noEmitOnError": true, // Стратегический запрет на компиляцию при наличии ошибок
     "noUncheckedIndexedAccess": true, // Безопасная работа с массивами
     "exactOptionalPropertyTypes": false, // Тонкое различие между «свойство отсутствует» и «свойство равно `undefined`»
-    "noImplicitReturns": false // Гарантирует, что функция не «забудет» вернуть значение.
+    "noImplicitReturns": false, // Гарантирует, что функция не «забудет» вернуть значение.
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src"] // Определяет папку для входных файлов
 }
