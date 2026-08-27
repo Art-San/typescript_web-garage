@@ -1,48 +1,79 @@
-const DocumentStatus = {
-  Draft: 'draft',
-  Published: 'published',
-  Archived: 'archived'
-} as const
-
-type DocumentStatus = (typeof DocumentStatus)[keyof typeof DocumentStatus]
-
-interface DocumentBase {
-  id: string
-  author: string
-  createdAt: Date
-  status: DocumentStatus
+type ProductStatus = 'draft' | 'published' | 'archived'
+type ProductCategory = 'electronics' | 'clothing' | 'books'
+type Product = {
+  readonly id: number
+  title: string
+  description: string
+  price: number
+  costPrice: number
+  status: ProductStatus
+  category: ProductCategory
+  imageUrl?: string
+  readonly createdAt: Date
 }
 
-type Article = DocumentBase & {
-  type: 'article'
-}
-type Video = DocumentBase & {
-  type: 'video'
-}
-type Podcast = DocumentBase & {
-  type: 'podcast'
-}
-
-type Document = Article | Video | Podcast
-
-interface Publishable {
-  publish(): void
+const product: Product = {
+  id: 1,
+  title: 'Smartphone',
+  description: 'Latest model with advanced features',
+  price: 599.99,
+  costPrice: 399.99,
+  status: 'published',
+  category: 'electronics',
+  imageUrl: 'https://example.com/smartphone.jpg',
+  createdAt: new Date()
 }
 
-class ArticleDocument implements Publishable {
-  constructor(
-    public id: string,
-    public author: string,
-    public createdAt: Date,
-    public status: DocumentStatus,
-    public type: 'article'
-  ) {}
+type ProductListItem = Pick<
+  Product,
+  'id' | 'title' | 'price' | 'status' | 'imageUrl'
+>
 
-  publish() {
-    this.status = DocumentStatus.Published
-  }
+const productListItem: ProductListItem = {
+  id: product.id,
+  title: product.title,
+  price: product.price,
+  status: product.status,
+  imageUrl: product.imageUrl
 }
 
-function getDocumentInfo(document: Document): string {
-  return `${document.author} - ${document.createdAt}`
+type PublicProduct = Omit<Product, 'costPrice'>
+
+const publicProduct: PublicProduct = {
+  id: product.id,
+  title: product.title,
+  description: product.description,
+  price: product.price,
+  status: product.status,
+  category: product.category,
+  imageUrl: product.imageUrl,
+  createdAt: product.createdAt
+}
+
+type CreateProductCommand = Omit<Product, 'id' | 'createdAt' | 'status'>
+
+const createProductCommand: CreateProductCommand = {
+  title: 'Smartphone',
+  description: 'Latest model with advanced features',
+  price: 599.99,
+  costPrice: 399.99,
+  category: 'electronics',
+  imageUrl: 'https://example.com/smartphone.jpg'
+}
+
+type EditableProductFields = Pick<
+  Product,
+  'title' | 'description' | 'price' | 'category' | 'imageUrl'
+>
+
+type ProductUpdatePatch = Partial<EditableProductFields>
+
+type UpdateProductCommand = {
+  productId: Product['id']
+} & ProductUpdatePatch
+
+const updateProductCommand: UpdateProductCommand = {
+  productId: 1,
+  title: 'Updated Smartphone',
+  price: 649.99
 }

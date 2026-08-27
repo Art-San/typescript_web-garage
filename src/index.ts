@@ -1,259 +1,71 @@
-// enum UserRole {
-//   Admin = "admin",
-//   Editor = "editor",
-//   Viewer = "viewer",
-// }
+import { calculateDiscountedPrice } from './product.js'
+import type { Product } from './product.js'
 
-// type UserRole = "admin" | "editor" | "viewer";
+import settings from './config.js'
 
-// function canDelete(role: UserRole): boolean {
-//   return role === "admin";
-// }
-
-// console.log(canDelete("admin"));
-// console.log(canDelete("editor"));
-
-// const role1: UserRole = "admin";
-// const role2: UserRole = "editor";
-
-const UserRole = {
-  Admin: 'admin',
-  Editor: 'editor',
-  Viewer: 'viewer'
-} as const
-
-type UserRole = (typeof UserRole)[keyof typeof UserRole]
-
-function canEdit(role: UserRole): boolean {
-  return role === UserRole.Admin || role === UserRole.Editor
+const product: Product = {
+  id: 1,
+  title: 'Клавиатура',
+  price: 7500
 }
 
-console.log(canEdit(UserRole.Admin))
-console.log(canEdit(UserRole.Viewer))
+console.log(calculateDiscountedPrice(product, 10))
 
-// enum Direction {
-//   Up = "UP",
-//   Down = "DOWN",
-// }
+// export { createMoney, addMoney } from './domain/money.js'
 
-// const enum DirectionConst {
-//   Up = "UP",
-//   Down = "DOWN",
-// }
+// export type { Money } from './domain/money.js'
 
-// console.log("Обычный enum:", Direction);
+// export type { Product } from './domain/product.js'
 
-// console.log("Значение:", Direction.Up);
+// export * from './domain/money.js'
 
-// console.log("const enum:", DirectionConst);
+// type TaskStatus = 'todo' | 'inProgress' | 'done'
 
-// console.log("Значение const enum:", DirectionConst.Up);
+// class TaskEntity {
+//   private status: TaskStatus = 'todo'
 
-// enum OrderStatus {
-//   Draft = 0,
-//   Paid = 1,
-//   Shipped = 2
-// }
+//   constructor(
+//     public readonly id: number,
+//     private title: string
+//   ) {
+//     if (title.trim() === '') {
+//       throw new Error('Название задачи обязательно')
+//     }
+//   }
 
-// enum UserRole {
-//   Admin = 'admin',
-//   Editor = 'editor',
-//   Viewer = 'viewer'
-// }
+//   rename(title: string): void {
+//     if (title.trim() === '') {
+//       throw new Error('Название задачи обязательно')
+//     }
 
-// // const role = UserRole.Admin;
+//     this.title = title.trim()
+//   }
 
-// // console.log(role);
+//   start(): void {
+//     if (this.status !== 'todo') {
+//       throw new Error('Начать можно только новую задачу')
+//     }
 
-// function canDelete(role: UserRole): boolean {
-//   return role === UserRole.Admin
-// }
+//     this.status = 'inProgress'
+//   }
 
-// console.log(canDelete(UserRole.Admin))
-// console.log(canDelete(UserRole.Editor))
+//   complete(): void {
+//     if (this.status !== 'inProgress') {
+//       throw new Error('Завершить можно только активную задачу')
+//     }
 
-// enum OrderStatus {
-//   Draft = 0,
-//   Paid = 1,
-//   Shipped = 2
-// }
+//     this.status = 'done'
+//   }
 
-// const status = OrderStatus.Shipped
-
-// console.log(status)
-
-// enum HttpStatus {
-//   Ok = 200,
-//   NotFound = 404,
-//   ServerError = 500,
-// }
-
-// let status;
-
-// if (status === 200) {
-//   console.log("Запрос выполнен успешно");
-// }
-
-// if (status === 404) {
-//   console.log("Страница не найдена");
-// }
-
-// if (status === 500) {
-//   console.log("Внутренняя ошибка сервера");
-// }
-
-// if (status === HttpStatus.Ok) {
-//   console.log("Запрос выполнен успешно");
-// }
-
-// if (status === HttpStatus.NotFound) {
-//   console.log("Страница не найдена");
-// }
-
-// if (status === HttpStatus.ServerError) {
-//   console.log("Внутренняя ошибка сервера");
-// }
-
-// console.log(HttpStatus)
-
-// interface PriceFormatter {
-//   format(price: number): string;
-// }
-
-// class RubleFormatter implements PriceFormatter {
-//   format(price: number): string {
-//     return `${price.toLocaleString("ru-RU")} ₽`;
+//   toSnapshot(): {
+//     id: number
+//     title: string
+//     status: TaskStatus
+//   } {
+//     return {
+//       id: this.id,
+//       title: this.title,
+//       status: this.status
+//     }
 //   }
 // }
-
-// const formatter = new RubleFormatter();
-
-// console.log(formatter.format(2500));
-
-// type Logger = {
-//   log(message: string): void;
-// };
-
-// class ConsoleLogger implements Logger {
-//   log(message: string): void {
-//     console.log(message);
-//   }
-// }
-
-// interface WindowSettings {
-//   theme: "light" | "dark";
-// }
-
-// interface WindowSettings {
-//   locale: "ru" | "en";
-// }
-
-// interface WindowSettings {
-//   theme: "light" | "dark";
-//   locale: "ru" | "en";
-// }
-
-// const settings: WindowSettings = {
-//   theme: "dark",
-//   locale: "ru",
-// };
-
-// console.log(settings);
-
-// window.appVersion = "1.0.0";
-
-// declare global {
-//   interface Window {
-//     appVersion: string;
-//   }
-// }
-
-// export {};
-
-// interface Product {
-//   id: number;
-//   title: string;
-//   price: number;
-// }
-
-// interface Entity {
-//   id: number;
-// }
-
-// interface Product extends Entity {
-//   title: string;
-//   price: number;
-// }
-
-// interface DigitalProduct extends Product {
-//   downloadUrl: string;
-//   fileSize: number;
-// }
-
-// interface Named {
-//   name: string;
-// }
-
-// interface Broken extends Named { // ошибка
-//   name: number;
-// }
-
-// type WithSlug = {
-//   slug: string;
-// };
-
-// interface Category extends WithSlug {
-//   title: string;
-// }
-
-// type User = {
-//   id: number;
-//   name: string;
-// };
-
-// type Id = string | number;
-
-// type Status = "draft" | "published";
-
-// type Coordinates = [number, number];
-
-// type Handler = (message: string) => void;
-
-// type Identified = {
-//   id: number;
-// };
-
-// type Timestamped = {
-//   createdAt: Date;
-//   updatedAt: Date;
-// };
-
-// type Article = Identified &
-//   Timestamped & {
-//     title: string;
-//     status: "draft" | "published";
-//   };
-
-// type Article = {
-//   id: number;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   title: string;
-//   status: "draft" | "published";
-// };
-
-// interface User {
-//   readonly id: number
-//   name?: string
-// }
-
-// const user: User = {
-//   id: 1,
-//   name: 'Анна'
-// }
-
-// function printUser(user: User): void {
-//   console.log(`${user.id}: ${user.name}`)
-// }
-
-// printUser(user)
