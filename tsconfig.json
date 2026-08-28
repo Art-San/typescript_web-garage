@@ -9,7 +9,7 @@
     "rootDir": "src", // Определяет корневую папку для входных файлов
     "outDir": "dist", // Определяет папку для выходных файлов
     "noEmitOnError": true, // Стратегический запрет на компиляцию при наличии ошибок
-    "noUncheckedIndexedAccess": true, // Безопасная работа с массивами
+    "noUncheckedIndexedAccess": false, // Безопасная работа с массивами
     "exactOptionalPropertyTypes": false, // Тонкое различие между «свойство отсутствует» и «свойство равно `undefined`»
     "noImplicitReturns": false, // Гарантирует, что функция не «забудет» вернуть значение.
     "declaration": true,
