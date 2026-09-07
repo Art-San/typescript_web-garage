@@ -1,79 +1,105 @@
-type ProductStatus = 'draft' | 'published' | 'archived'
-type ProductCategory = 'electronics' | 'clothing' | 'books'
-type Product = {
-  readonly id: number
-  title: string
-  description: string
-  price: number
-  costPrice: number
-  status: ProductStatus
-  category: ProductCategory
-  imageUrl?: string
-  readonly createdAt: Date
+interface Car {
+  speed: number
+  drive(): void
 }
 
-const product: Product = {
-  id: 1,
-  title: 'Smartphone',
-  description: 'Latest model with advanced features',
-  price: 599.99,
-  costPrice: 399.99,
-  status: 'published',
-  category: 'electronics',
-  imageUrl: 'https://example.com/smartphone.jpg',
-  createdAt: new Date()
+class SportCar implements Car {
+  public speed: number = 200 // ✅ Проверяется: у созданной машины будет speed
+
+  public drive() {
+    // ✅ Проверяется: у созданной машины будет метод drive
+    console.log('Врум!')
+  }
+
+  // 1. Статические члены (static) интерфейс Car НЕ описывает и НЕ проверяет:
+  public static wheelCount: number = 4 // Car до этого нет дела, это поле на самом классе
+
+  // 2. Приватные члены (private) интерфейс Car тоже НЕ описывает:
+  private engineSerial: string = 'XYZ-123' // Это внутренность класса, внешнему контракту она не видна
 }
 
-type ProductListItem = Pick<
-  Product,
-  'id' | 'title' | 'price' | 'status' | 'imageUrl'
->
+const newSportCar = new SportCar()
 
-const productListItem: ProductListItem = {
-  id: product.id,
-  title: product.title,
-  price: product.price,
-  status: product.status,
-  imageUrl: product.imageUrl
-}
+newSportCar.drive()
 
-type PublicProduct = Omit<Product, 'costPrice'>
+console.log(SportCar.wheelCount)
 
-const publicProduct: PublicProduct = {
-  id: product.id,
-  title: product.title,
-  description: product.description,
-  price: product.price,
-  status: product.status,
-  category: product.category,
-  imageUrl: product.imageUrl,
-  createdAt: product.createdAt
-}
+// type ProductStatus = 'draft' | 'published' | 'archived'
+// type ProductCategory = 'electronics' | 'clothing' | 'books'
+// type Product = {
+//   readonly id: number
+//   title: string
+//   description: string
+//   price: number
+//   costPrice: number
+//   status: ProductStatus
+//   category: ProductCategory
+//   imageUrl?: string
+//   readonly createdAt: Date
+// }
 
-type CreateProductCommand = Omit<Product, 'id' | 'createdAt' | 'status'>
+// const product: Product = {
+//   id: 1,
+//   title: 'Smartphone',
+//   description: 'Latest model with advanced features',
+//   price: 599.99,
+//   costPrice: 399.99,
+//   status: 'published',
+//   category: 'electronics',
+//   imageUrl: 'https://example.com/smartphone.jpg',
+//   createdAt: new Date()
+// }
 
-const createProductCommand: CreateProductCommand = {
-  title: 'Smartphone',
-  description: 'Latest model with advanced features',
-  price: 599.99,
-  costPrice: 399.99,
-  category: 'electronics',
-  imageUrl: 'https://example.com/smartphone.jpg'
-}
+// type ProductListItem = Pick<
+//   Product,
+//   'id' | 'title' | 'price' | 'status' | 'imageUrl'
+// >
 
-type EditableProductFields = Pick<
-  Product,
-  'title' | 'description' | 'price' | 'category' | 'imageUrl'
->
+// const productListItem: ProductListItem = {
+//   id: product.id,
+//   title: product.title,
+//   price: product.price,
+//   status: product.status,
+//   imageUrl: product.imageUrl
+// }
 
-type ProductUpdatePatch = Partial<EditableProductFields>
+// type PublicProduct = Omit<Product, 'costPrice'>
 
-type UpdateProductCommand = {
-  productId: Product['id']
-} & ProductUpdatePatch
+// const publicProduct: PublicProduct = {
+//   id: product.id,
+//   title: product.title,
+//   description: product.description,
+//   price: product.price,
+//   status: product.status,
+//   category: product.category,
+//   imageUrl: product.imageUrl,
+//   createdAt: product.createdAt
+// }
 
-const updateProductCommand: UpdateProductCommand = {
-  productId: 1,
-  title: 'Updated Smartphone',
-  price: 649.99
-}
+// type CreateProductCommand = Omit<Product, 'id' | 'createdAt' | 'status'>
+
+// const createProductCommand: CreateProductCommand = {
+//   title: 'Smartphone',
+//   description: 'Latest model with advanced features',
+//   price: 599.99,
+//   costPrice: 399.99,
+//   category: 'electronics',
+//   imageUrl: 'https://example.com/smartphone.jpg'
+// }
+
+// type EditableProductFields = Pick<
+//   Product,
+//   'title' | 'description' | 'price' | 'category' | 'imageUrl'
+// >
+
+// type ProductUpdatePatch = Partial<EditableProductFields>
+
+// type UpdateProductCommand = {
+//   productId: Product['id']
+// } & ProductUpdatePatch
+
+// const updateProductCommand: UpdateProductCommand = {
+//   productId: 1,
+//   title: 'Updated Smartphone',
+//   price: 649.99
+// }
