@@ -1,58 +1,8 @@
-export { createMoney, addMoney } from './domain/money.js'
+// src/index.ts
+// export type { Product } from './domain/products.js';
+// export { createMoney, addMoney } from './domain/money.js';
+// Внутреннюю функцию roundMoney мы отсюда НЕ экспортируем!
 
-export type { Money } from './domain/money.js'
-
-export type { Product } from './domain/product.js'
-
-// export * from './domain/money.js'
-
-// type TaskStatus = 'todo' | 'inProgress' | 'done'
-
-// class TaskEntity {
-//   private status: TaskStatus = 'todo'
-
-//   constructor(
-//     public readonly id: number,
-//     private title: string
-//   ) {
-//     if (title.trim() === '') {
-//       throw new Error('Название задачи обязательно')
-//     }
-//   }
-
-//   rename(title: string): void {
-//     if (title.trim() === '') {
-//       throw new Error('Название задачи обязательно')
-//     }
-
-//     this.title = title.trim()
-//   }
-
-//   start(): void {
-//     if (this.status !== 'todo') {
-//       throw new Error('Начать можно только новую задачу')
-//     }
-
-//     this.status = 'inProgress'
-//   }
-
-//   complete(): void {
-//     if (this.status !== 'inProgress') {
-//       throw new Error('Завершить можно только активную задачу')
-//     }
-
-//     this.status = 'done'
-//   }
-
-//   toSnapshot(): {
-//     id: number
-//     title: string
-//     status: TaskStatus
-//   } {
-//     return {
-//       id: this.id,
-//       title: this.title,
-//       status: this.status
-//     }
-//   }
-// }
+declare module 'old-calc' {
+    export function add(a: number, b: number): number
+}

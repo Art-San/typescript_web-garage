@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* 1. Главный рубильник строгой типизации */
+    "strict": true, // ВКЛЮЧАЕТ noImplicitAny, strictNullChecks, strictFunctionTypes и др.
+
+    /* 2. Удаляем ручные отключения: strictNullChecks ДОЛЖЕН БЫТЬ true! */
+    "strictNullChecks": true, // (можно удалить строку, так как strict: true уже включает его)
+
+    /* 3. Независимые флаги повышенной строгости (они НЕ входят в strict) */
+    "noUncheckedIndexedAccess": true, // Безопасный доступ к массивам (добавляет undefined)
+    "exactOptionalPropertyTypes": true, // Различает отсутствие поля и поле со значением undefined
+    "noImplicitReturns": true, // Запрещает забывать return в ветках функций
+    "noFallthroughCasesInSwitch": true, // Запрещает случайный пропуск break в switch
+
+    /* 4. Чистота кода */
+    "noUnusedLocals": true, // Ошибка на неиспользованные локальные переменные
+    "noUnusedParameters": true, // Ошибка на неиспользованные аргументы функций
+
+    /* 5. Настройки сборки */
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmitOnError": true // Не создавать JS в dist при наличии ошибок TS
+  },
+  "include": ["src"]
+}

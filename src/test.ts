@@ -1,105 +1,11 @@
-interface Car {
-  speed: number
-  drive(): void
+type CatalogProduct = {
+  sku: string
+  price: number
+  labels: string[]
 }
 
-class SportCar implements Car {
-  public speed: number = 200 // ✅ Проверяется: у созданной машины будет speed
-
-  public drive() {
-    // ✅ Проверяется: у созданной машины будет метод drive
-    console.log('Врум!')
-  }
-
-  // 1. Статические члены (static) интерфейс Car НЕ описывает и НЕ проверяет:
-  public static wheelCount: number = 4 // Car до этого нет дела, это поле на самом классе
-
-  // 2. Приватные члены (private) интерфейс Car тоже НЕ описывает:
-  private engineSerial: string = 'XYZ-123' // Это внутренность класса, внешнему контракту она не видна
+type CartQuantity = {
+  quantity: number
 }
 
-const newSportCar = new SportCar()
-
-newSportCar.drive()
-
-console.log(SportCar.wheelCount)
-
-// type ProductStatus = 'draft' | 'published' | 'archived'
-// type ProductCategory = 'electronics' | 'clothing' | 'books'
-// type Product = {
-//   readonly id: number
-//   title: string
-//   description: string
-//   price: number
-//   costPrice: number
-//   status: ProductStatus
-//   category: ProductCategory
-//   imageUrl?: string
-//   readonly createdAt: Date
-// }
-
-// const product: Product = {
-//   id: 1,
-//   title: 'Smartphone',
-//   description: 'Latest model with advanced features',
-//   price: 599.99,
-//   costPrice: 399.99,
-//   status: 'published',
-//   category: 'electronics',
-//   imageUrl: 'https://example.com/smartphone.jpg',
-//   createdAt: new Date()
-// }
-
-// type ProductListItem = Pick<
-//   Product,
-//   'id' | 'title' | 'price' | 'status' | 'imageUrl'
-// >
-
-// const productListItem: ProductListItem = {
-//   id: product.id,
-//   title: product.title,
-//   price: product.price,
-//   status: product.status,
-//   imageUrl: product.imageUrl
-// }
-
-// type PublicProduct = Omit<Product, 'costPrice'>
-
-// const publicProduct: PublicProduct = {
-//   id: product.id,
-//   title: product.title,
-//   description: product.description,
-//   price: product.price,
-//   status: product.status,
-//   category: product.category,
-//   imageUrl: product.imageUrl,
-//   createdAt: product.createdAt
-// }
-
-// type CreateProductCommand = Omit<Product, 'id' | 'createdAt' | 'status'>
-
-// const createProductCommand: CreateProductCommand = {
-//   title: 'Smartphone',
-//   description: 'Latest model with advanced features',
-//   price: 599.99,
-//   costPrice: 399.99,
-//   category: 'electronics',
-//   imageUrl: 'https://example.com/smartphone.jpg'
-// }
-
-// type EditableProductFields = Pick<
-//   Product,
-//   'title' | 'description' | 'price' | 'category' | 'imageUrl'
-// >
-
-// type ProductUpdatePatch = Partial<EditableProductFields>
-
-// type UpdateProductCommand = {
-//   productId: Product['id']
-// } & ProductUpdatePatch
-
-// const updateProductCommand: UpdateProductCommand = {
-//   productId: 1,
-//   title: 'Updated Smartphone',
-//   price: 649.99
-// }
+type CartItem = CatalogProduct & CartQuantity

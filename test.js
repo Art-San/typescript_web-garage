@@ -1,22 +1,9 @@
-console.log(1)
+const testUrl =
+  'https://specauto-tomsk.ru/vyvoz-musora/?ifso=zakaz-vyv&etext=2202.DVF2u4NVG9U0ekT1fdp_4_Y0EKIhsytq3hDHv8RqSXpPDLzuFG-6W0uLqVa6-k-UZWx2d3lhY255ZGRybXZ'
 
-setTimeout(() => console.log(2), 0)
+// var sourcePath = referrerUrl.pathname.replace(/\/{2,}/g, '/');
+const url = new URL(testUrl)
 
-console.log(3)
+const sourcePath = url.pathname.replace(/\/{2,}/g, '/')
 
-Promise.resolve()
-  .then(() => {
-    console.log(4)
-    return 15
-  })
-  .then((test) => {
-    console.log(15, test)
-    console.log(5)
-  })
-  .then(() => console.log(6))
-  .then(() => setTimeout(() => console.log(7), 0))
-  .then(() => {
-    console.log(8)
-    return 9
-  })
-  .then(console.log)
+console.log(sourcePath)
