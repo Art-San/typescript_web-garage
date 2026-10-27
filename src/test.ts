@@ -1,11 +1,15 @@
-type CatalogProduct = {
-  sku: string
-  price: number
-  labels: string[]
+type Settings = {
+  theme: 'light' | 'dark'
+  retries: number
+  notifications: boolean
 }
 
-type CartQuantity = {
-  quantity: number
+type T5 = keyof {
+  theme: 'light' | 'dark'
+  retries: number
+  notifications: boolean
 }
 
-type CartItem = CatalogProduct & CartQuantity
+type T6 = keyof Settings
+
+type T7 = keyof { [key: string]: Settings }

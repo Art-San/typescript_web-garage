@@ -1,9 +1,26 @@
-const testUrl =
-  'https://specauto-tomsk.ru/vyvoz-musora/?ifso=zakaz-vyv&etext=2202.DVF2u4NVG9U0ekT1fdp_4_Y0EKIhsytq3hDHv8RqSXpPDLzuFG-6W0uLqVa6-k-UZWx2d3lhY255ZGRybXZ'
+const users = [
+  { name: 'Алексей', role: 'admin' },
+  { name: 'Иван', role: 'user' },
+  { name: 'Елена', role: 'admin' }
+]
 
-// var sourcePath = referrerUrl.pathname.replace(/\/{2,}/g, '/');
-const url = new URL(testUrl)
+function groupBy(arr, k) {
+  return arr.reduce((accumulator, currentValue) => {
+    console.log('222', currentValue[k])
 
-const sourcePath = url.pathname.replace(/\/{2,}/g, '/')
+    const key = currentValue[k]
+    const group = (accumulator[key] ??= [])
+    group.push(currentValue)
 
-console.log(sourcePath)
+    return accumulator
+  }, {})
+}
+
+const grouped = groupBy(users, 'role')
+
+console.log(23, grouped)
+// Результат:
+// {
+//   admin: [{ name: "Алексей", role: "admin" }, { name: "Елена", role: "admin" }],
+//   user: [{ name: "Иван", role: "user" }]
+// }
